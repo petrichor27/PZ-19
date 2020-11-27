@@ -24,7 +24,6 @@ int fact(int c)
 int main()
 {
 	setlocale(LC_ALL, "RUS");
-	int p = 4, q = 3;
 	cout << "Введите p:";
 	cin >> p;
 	cout << "Введите q:";
