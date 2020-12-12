@@ -14,25 +14,20 @@ bool Sochet(int* res, int n, int k)
 		}
 	return false;
 }
-int fact(int c)
-{
-	int k = 1;
-	for (int i = 1; i < c; ++i)
-		k *= k * i;
-	return k;
-}
 int main()
 {
 	setlocale(LC_ALL, "RUS");
+	ofstream fout("OUTPUT.txt");
+	int q, p;
 	cout << "Введите p:";
 	cin >> p;
 	cout << "Введите q:";
 	cin >> q;
-	int* res = new int[p];
+	int* res = new int[p];//сочетание вершин
 	for (int i = 0; i < p; i++)
 		res[i] = i;
-	int k = fact(p) / (fact(p - 2) * 2);
-	int** reb = new int *[k];
+	int k = (p*(p-1)) / 2;
+	int** reb = new int* [k];//ребра
 	for (int i = 0; i < k; i++)
 		reb[i] = new int[2];
 	if (p >= 2)
@@ -46,23 +41,21 @@ int main()
 		} while (Sochet(res, p, 2));
 
 	}
-
-	int* res1 = new int[k];
+	int* res1 = new int[k];//сочетание ребер
 	for (int i = 0; i < k; i++)
 		res1[i] = i;
-	bool** ms = new bool* [p];
+	bool** ms = new bool* [p];//матрица смежности
 	for (int i = 0; i < p; i++)
 		ms[i] = new bool[p];
-	
-	if (k >= q)
+	if (k >= q)//если пользователь ввел не слишком большое количество ребер
 	{
 		int num = 0;
 		do
 		{
 			for (int i = 0; i < p; i++)
-		for (int j = 0; j < p; j++)
-			ms[i][j] = 0;
-			cout << num+1 << ")\n";
+				for (int j = 0; j < p; j++)
+					ms[i][j] = 0;
+			fout << num + 1 << ")\n";
 			for (int i = 0; i < q; i++)
 			{
 				ms[reb[res1[i]][0]][reb[res1[i]][1]] = 1;
@@ -71,13 +64,14 @@ int main()
 			for (int i = 0; i < p; i++)
 			{
 				for (int j = 0; j < p; j++)
-					cout << ms[i][j] << " ";
-				cout << endl;
+					fout << ms[i][j] << " ";
+				fout << endl;
 			}
 			num++;
-			cout << endl;
+			fout << endl;
 		} while (Sochet(res1, k, q));
-
+		cout << "Было построено " << num << " матриц смежности вершин\n";
 	}
+	fout.close();
 	return 0;
 }
