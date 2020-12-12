@@ -14,26 +14,19 @@ bool Sochet(int* res, int n, int k)
 		}
 	return false;
 }
-int fact(int c)
-{
-	int k = 1;
-	for (int i = 1; i < c; ++i)
-		k *= k * i;
-	return k;
-}
 int main()
 {
 	setlocale(LC_ALL, "RUS");
+	ofstream fout("OUTPUT.txt");
 	int p, q;
 	cout << "Введите p:";
-	cin >> p;
-	q = p * (p - 1) / 2;
-	int* res = new int[p];
+	cin >> p;// кол-во вершин
+	q = p * (p - 1) / 2;// кол-во ребер
+	int* res = new int[p];//массив  
 	for (int i = 0; i < p; i++)
 		res[i] = i;
-	int k = fact(p) / (fact(p - 2) * 2);
-	int** reb = new int *[k];
-	for (int i = 0; i < k; i++)
+	int** reb = new int* [q];
+	for (int i = 0; i < q; i++)
 		reb[i] = new int[2];
 	if (p >= 2)
 	{
@@ -44,26 +37,24 @@ int main()
 				reb[num][i] = res[i];
 			num++;
 		} while (Sochet(res, p, 2));
-
 	}
-
-	int* res1 = new int[k];
-	bool** ms = new bool* [p];
+	int* res1 = new int[q];
+	bool** ms = new bool* [p];//матрица смежности
 	for (int i = 0; i < p; i++)
 		ms[i] = new bool[p];
 	int num = 0;
-	for (int t=0;t<=q;t++)
+	for (int t = 0; t <= q; t++)
 	{
-		for (int i = 0; i < k; i++)
+		for (int i = 0; i < q; i++)
 			res1[i] = i;
-		if (k >= t)
+		if (q >= t)
 		{
 			do
 			{
 				for (int i = 0; i < p; i++)
 					for (int j = 0; j < p; j++)
 						ms[i][j] = 0;
-				cout << num + 1 << ")\n";
+				fout << num + 1 << ")\n";
 				for (int i = 0; i < t; i++)
 				{
 					ms[reb[res1[i]][0]][reb[res1[i]][1]] = 1;
@@ -72,13 +63,15 @@ int main()
 				for (int i = 0; i < p; i++)
 				{
 					for (int j = 0; j < p; j++)
-						cout << ms[i][j] << " ";
-					cout << endl;
+						fout << ms[i][j] << " ";
+					fout << endl;
 				}
 				num++;
-				cout << endl;
-			} while (Sochet(res1, k, t));
+				fout << endl;
+			} while (Sochet(res1, q, t));
 		}
 	}
+	cout << "Было построено " << num << " матриц смежности вершин\n";
+	fout.close();
 	return 0;
 }
