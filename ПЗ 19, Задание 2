@@ -22,10 +22,10 @@ int main()
 	cout << "Введите p:";
 	cin >> p;// кол-во вершин
 	q = p * (p - 1) / 2;// кол-во ребер
-	int* res = new int[p];//массив  
+	int* res = new int[p];//массив для сочетания
 	for (int i = 0; i < p; i++)
 		res[i] = i;
-	int** reb = new int* [q];
+	int** reb = new int* [q];//матрица для ребер
 	for (int i = 0; i < q; i++)
 		reb[i] = new int[2];
 	if (p >= 2)
@@ -38,7 +38,7 @@ int main()
 			num++;
 		} while (Sochet(res, p, 2));
 	}
-	int* res1 = new int[q];
+	int* res1 = new int[q];//тоже для сочетания
 	bool** ms = new bool* [p];//матрица смежности
 	for (int i = 0; i < p; i++)
 		ms[i] = new bool[p];
